@@ -5,8 +5,123 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Forecast</title>
+    <script src="https://example.com/fontawesome/v5.15.4/js/all.js" data-auto-a11y="true" ></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/style.css">
 </head>
-<body>
+
+<body data-bs-theme="dark" class="">
+    <nav class="navbar bg-primary container-fluid">
+       <h1 class="ms-3">Weather Forecast</h1>
+       <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault LMDMselect">
+        <label class="form-check-label text-light" for="flexSwitchCheckDefault">Light Mode</label>
+      </div>
+    </nav>
+
+    <main id="mainContent" class="d-flex">
+        <aside id="citySearch" class="bg-dark col-3 d-flex flex-column">
+            <div class="bg-primary-subtle py-3">
+                <h3 class="text-center">Search for a City: </h3>
+            </div>
+            <div class="rounded-bottom">
+                <div class="card bg-dark-subtle input-group-lg">
+                    <input id="cityName" class="mx-1 mt-2 rounded" type="text" placeholder="Atlanta, GA">
+                    <button id="searchBtn" class="bg-primary text-light mx-1 rounded">Search</button>
+                    <div id="citySuggestions" class="d-flex flex-column mt-3 text-center">
+                        <p class="card bg-primary-subtle mx-1">Fayettville, NC</p>
+                        <p class="card bg-primary-subtle mx-1">Raleigh, NC</p> 
+                        <p class="card bg-primary-subtle mx-1">Charlotte, NC</p>
+                        <p class="card bg-primary-subtle mx-1">London, United Kingdom</p>
+                        <p class="card bg-primary-subtle mx-1">Montreal, QB, Canada</p>
+                    </div> 
+                </div>
+            </div>
+            
+        </aside>
+
+        <div id="cityData" class="col-9 text-center ">
+            <div class="bg-primary-subtle rounded-bottom ">
+                <h3 class="pt-4">Current Weather: </h3>
+                <div class="card bg-primary-subtle">
+                    <h3 class="fs-1 ">Raleigh, NC <p class="fs-5 text-body">Jan. 24, 2023</p></h3>
+                        <div class="d-flex flex-row justify-content-center align-items-center">
+                            <div class="flex-column me-4">
+                                <i class="fa-solid fa-cloud fa-4x"></i>
+                            </div>
+                            <div class=" flex-column align-items-end justify-content-center">
+                                <p class="fs-4 text-light">Temp: 77 F</p>
+                                <p class="fs-6">Wind Speed: 5 MPH NE</p>
+                                <p class="fs-6">Humidity: 66%</p> 
+                            </div>
+                        </div>
+                    
+                    
+                </div>
+            </div>
+            <div class="d-flex flex-row m-3 mx-2 container-fluid">
+                <div class="bg-primary-subtle pb-4 card me-4">
+                    <h5 class="text-center">1/24/2023</h5>
+                    <div class="bg-light text-dark p-3">
+                        <i class="fa-solid fa-cloud fa-2x"></i>
+                        <p class="fs-4">Temp: 77 F</p>
+                        <p class="fs-6">Wind: 5 MPH SW</p>
+                        <p class="fs-6">Humidity: 30%</p>
+                    </div>
+                </div>
+
+                <div class="bg-primary-subtle pb-4 card me-4">
+                    <h5 class="text-center">1/24/2023</h5>
+                    <div class="bg-light text-dark p-3">
+                        <i class="fa-solid fa-cloud fa-2x"></i>
+                        <p class="fs-4">Temp: 77 F</p>
+                        <p class="fs-6">Wind: 5 MPH SW</p>
+                        <p class="fs-6">Humidity: 30%</p>
+                    </div>
+                </div>
+                <div class="bg-primary-subtle pb-4 card me-4">
+                    <h5 class="text-center">1/24/2023</h5>
+                    <div class="bg-light text-dark p-3">
+                        <i class="fa-solid fa-cloud fa-2x"></i>
+                        <p class="fs-4">Temp: 77 F</p>
+                        <p class="fs-6">Wind: 5 MPH SW</p>
+                        <p class="fs-6">Humidity: 30%</p>
+                    </div>
+                </div>
+                <div class="bg-primary-subtle pb-4 card me-4">
+                    <h5 class="text-center">1/24/2023</h5>
+                    <div class="bg-light text-dark p-3">
+                        <i class="fa-solid fa-cloud fa-2x"></i>
+                        <p class="fs-4">Temp: 77 F</p>
+                        <p class="fs-6">Wind: 5 MPH SW</p>
+                        <p class="fs-6">Humidity: 30%</p>
+                    </div>
+                </div>
+                <div class="bg-primary-subtle pb-4 card me-4">
+                    <h5 class="text-center">1/24/2023</h5>
+                    <div class="bg-light text-dark p-3">
+                        <i class="fa-solid fa-cloud fa-2x"></i>
+                        <p class="fs-4">Temp: 77 F</p>
+                        <p class="fs-6">Wind: 5 MPH SW</p>
+                        <p class="fs-6">Humidity: 30%</p>
+                    </div>
+                </div>
+            </div>
+                
+        </div>
+        
+            
+    </main>
+
+    <script src="https://kit.fontawesome.com/0a50c2e339.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="/assets/script.js"></script>
     
 </body>
+
+<footer class="text-center mt-5">
+    <p>Made with love by Branning Knight</p>
+</footer>
+
 </html>
