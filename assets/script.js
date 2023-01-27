@@ -1,3 +1,4 @@
+let cityName = $('#cityName');
 let cityTitle = $('#cityTitle');
 let currentDate = $('#currentDate');
 let currentTemp = $('#currentTemp');
@@ -23,6 +24,7 @@ searchButton.click(function() {
 function getWeatherData() { //Remember to change Raleigh to selected city from search
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=Raleigh&appid=${APIkey}&units=imperial`, {
     method: 'GET',
+    // https://api.openweathermap.org/data/2.5/weather?q={city name},{state code},{country code}&appid={API key}
     credentials: 'same-origin',
     redirect: 'follow',
 })
@@ -33,15 +35,15 @@ function getWeatherData() { //Remember to change Raleigh to selected city from s
         console.log(data);
         var location = data.name;
         console.log('city name:', location);
-        var lowTemp = data.main.temp_min;
+        var lowTemp = Math.round(data.main.temp_min);
         console.log('Low: ', lowTemp);
-        var currTemp = data.main.temp;
+        var currTemp = Math.round(data.main.temp);
         console.log('Current temp:', currTemp);
         var highTemp = data.main.temp_max;
-        console.log('High:', highTemp);
+        console.log('High:', Math.round(highTemp));
         var weatherConditions = data.weather[0].description;
         console.log('Current conditions:', weatherConditions);
-        var windSpeed = data.wind.speed;
+        var windSpeed = Math.round(data.wind.speed);
         console.log('wind speed:', windSpeed);
         var windDir = data.wind.deg;
         console.log('wind direction(degrees):', windDir);
@@ -56,10 +58,9 @@ function getWeatherData() { //Remember to change Raleigh to selected city from s
         console.log('humidity', hum, '%');
 
         cityTitle[0].textContent = location;
-        console.log(cityTitle);
         currentTemp[0].textContent = ('Temp: ' + currTemp + '°F');
         currentDate[0].textContent = dayjs().format('ddd M/D/YYYY');
-        wind[0].textContent = ('Wind Speed: ' + windSpeed + ' MPH ' + degToCompass(windDir));
+        wind[0].textContent = ('Wind Speed: ' + Math.round(windSpeed) + ' MPH ' + degToCompass(windDir));
         humidity[0].textContent = ('Humidity: ' + hum + '%');
 
         // data to make forecast request
