@@ -44,15 +44,16 @@
             <div class="bg-primary-subtle rounded-bottom ">
                 <h3 class="pt-4">Current Weather: </h3>
                 <div class="card bg-primary-subtle">
-                    <h3 class="fs-1 ">Raleigh, NC <p class="fs-5 text-body">Jan. 24, 2023</p></h3>
+                    <h3 id="cityTitle" class="fs-1 ">Detroit</h3>
+                    <p id="currentDate" class="fs-5 text-body">Jan. 24, 2023</p>
                         <div class="d-flex flex-row justify-content-center align-items-center">
                             <div class="flex-column me-4">
-                                <i class="fa-solid fa-cloud fa-4x"></i>
+                                <i id="weatherIcon" class="fa-solid fa-cloud fa-4x"></i>
                             </div>
-                            <div class=" flex-column align-items-end justify-content-center">
-                                <p class="fs-4 text-light">Temp: 77 F</p>
-                                <p class="fs-6">Wind Speed: 5 MPH NE</p>
-                                <p class="fs-6">Humidity: 66%</p> 
+                            <div  class=" flex-column align-items-end justify-content-center">
+                                <p id="currentTemp" class="fs-4 text-light">Temp: 77 F</p>
+                                <p id="windSpeed" class="fs-6">Wind Speed: 5 MPH NE</p>
+                                <p id="humidity" class="fs-6">Humidity: 66%</p> 
                             </div>
                         </div>
                     
@@ -113,7 +114,7 @@
             
     </main>
 
-    <script src="https://kit.fontawesome.com/0a50c2e339.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>    <script src="https://kit.fontawesome.com/0a50c2e339.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.3.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     <script src="/assets/script.js"></script>
