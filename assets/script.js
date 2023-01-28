@@ -5,6 +5,7 @@ let currentTemp = $('#currentTemp');
 let icon = $('#weatherIcon');
 let wind = $('#windSpeed');
 let humidity = $('#humidity');
+let boxDate = $('#boxDate');
 const APIkey = "6263ccfbb1c32f882fe28992cf9e4cdd"
 
 var pageMode = $('#flexSwitchCheckDefault');
@@ -58,7 +59,7 @@ function getWeatherData() { //Remember to change Raleigh to selected city from s
 
         cityTitle[0].textContent = location;
         currentTemp[0].textContent = ('Temp: ' + currTemp + '°F');
-        currentDate[0].textContent = dayjs().format('ddd M/D/YYYY');
+        currentDate[0].textContent = dayjs().format('ddd MM/DD/YYYY');
         wind[0].textContent = ('Wind Speed: ' + windSpeed + ' MPH ' + degToCompass(windDir));
         humidity[0].textContent = ('Humidity: ' + hum + '%');
         icon.append(`<img src= http://openweathermap.org/img/wn/${weatherImage}@2x.png></img>`);
@@ -90,6 +91,28 @@ console.log("======================================");
             console.log("Data: ", data);
 
             // we want to pull apart the 'dt_txt'
+
+            // data.list[3] = noon the following day
+            // data.list[11] = noon two days after
+            // data.list[19] = noon 3 days after
+            // data.list[27] = noon 4 days after
+            // data.lsit[35] = noon 5 days after
+
+            console.log(data.list[3]);
+            console.log(data.list[3].dt_txt);
+            console.log(data.list[3].main.temp);
+
+            var dtTXT = data.list[3].dt_txt; 
+
+            console.log(dtTXT.split(' '));
+
+            var dtText = dtTXT.split(' ');
+
+            var dateText = dtText[0].split('-');
+            console.log(dateText);
+
+            boxDate[0].textContent = (dateText[1] + '/' + dateText[2] +'/' + dateText[0])
+
             // <div class="d-flex flex-row m-3 mx-2 container-fluid">
             // <div class="bg-primary-subtle pb-4 card me-4">
             //     <h5 class="text-center">1/24/2023</h5>
