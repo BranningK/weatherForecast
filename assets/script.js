@@ -6,6 +6,7 @@ let icon = $('#weatherIcon');
 let wind = $('#windSpeed');
 let humidity = $('#humidity');
 let boxDate = $('#boxDate');
+let boxContainer = $('#boxContainer')
 const APIkey = "6263ccfbb1c32f882fe28992cf9e4cdd"
 
 var pageMode = $('#flexSwitchCheckDefault');
@@ -90,29 +91,38 @@ console.log("======================================");
         .then(data => {
             console.log("Data: ", data);
 
-            // we want to pull apart the 'dt_txt'
-
             // data.list[3] = noon the following day
             // data.list[11] = noon two days after
             // data.list[19] = noon 3 days after
             // data.list[27] = noon 4 days after
             // data.lsit[35] = noon 5 days after
 
+            
+
             console.log(data.list[3]);
             console.log(data.list[3].dt_txt);
             console.log(data.list[3].main.temp);
 
-            var dtTXT = data.list[3].dt_txt; 
-
-            console.log(dtTXT.split(' '));
-
+            var dtTXT = data.list[3].dt_txt;
             var dtText = dtTXT.split(' ');
-
             var dateText = dtText[0].split('-');
-            console.log(dateText);
 
-            boxDate[0].textContent = (dateText[1] + '/' + dateText[2] +'/' + dateText[0])
+            var temp1 = Math.round(data.list[3].main.temp);
 
+            var date1 = (dateText[1] + '/' + dateText[2] +'/' + dateText[0])
+            
+            for (i = 0; i < 5; i++){
+                boxContainer.prepend(   `<div class="bg-primary-subtle pb-4 card me-4">
+                                            <h5 class="text-center">${date1}</h5>
+                                            <div class="bg-light text-dark p-3">
+                                                <i class="fa-solid fa-cloud fa-2x"></i>
+                                                <p class="fs-4">${temp1} F</p>
+                                                <p class="fs-6">Wind: 5 MPH SW</p>
+                                                <p class="fs-6">Humidity: 30%</p>
+                                            </div>
+                                        </div>`
+                                    );
+            }
             // <div class="d-flex flex-row m-3 mx-2 container-fluid">
             // <div class="bg-primary-subtle pb-4 card me-4">
             //     <h5 class="text-center">1/24/2023</h5>
@@ -124,6 +134,7 @@ console.log("======================================");
             //     </div>
             // </div>
 
+            // we want to pull apart the 'dt_txt'
             // how do we convert a STRING to ARRAY and ARRAY to STRING
             let test = "Hello There Friend";
             let result = test.split(" ")  // ["Hello", "Theree", "Friende"]
