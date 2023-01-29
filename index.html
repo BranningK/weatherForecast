@@ -13,10 +13,6 @@
 <body data-bs-theme="light" class="bg-light">
     <nav class="navbar darker-blue container-fluid">
        <h1 class="ms-3 text-light">Weather Forecast</h1>
-       <div class="form-check form-switch">
-        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault LMDMselect">
-        <label class="form-check-label text-light me-4" for="flexSwitchCheckDefault">Mode</label>
-      </div>
     </nav>
 
     <main id="mainContent" class="d-flex">
@@ -29,11 +25,11 @@
                     <input id="cityName" class="mx-1 mt-2 rounded border-light" type="text" placeholder="Atlanta, GA">
                     <button id="searchBtn" type="submit" class="bg-primary text-light border-primary mx-1 mt-1 rounded">Search</button>
                     <div id="citySuggestions" class="d-flex flex-column mt-3 text-center">
-                        <p id="rec1" class="card bg-primary-subtle border-primary mx-1"><a href=" " class="streched-link text-dark">Fayettville, NC</a></p>
-                        <p id="rec2" class="card bg-primary-subtle border-primary mx-1"><a href=" " class="streched-link text-dark">Raleigh, NC</a></p> 
-                        <p id="rec3" class="card bg-primary-subtle border-primary mx-1"><a href=" " class="streched-link text-dark">Wilmington, DE</a></p>
-                        <p id="rec4" class="card bg-primary-subtle border-primary mx-1"><a href=" " class="streched-link text-dark">Montreal, CA</a></p>
-                        <p id="rec5" class="card bg-primary-subtle border-primary mx-1"><a href=" " class="streched-link text-dark">Atlanta, GA</a></p>
+                        <p id='rec1' class="card bg-primary-subtle border-primary mx-1"><a href=" " class="streched-link text-dark"></a>Raleigh</p>
+                        <p id="rec2" class="card bg-primary-subtle border-primary mx-1"><a href=" " class="streched-link text-dark">Fayetteville</a></p> 
+                        <p id="rec3" class="card bg-primary-subtle border-primary mx-1"><a href=" " class="streched-link text-dark">Wilmington</a></p>
+                        <p id="rec4" class="card bg-primary-subtle border-primary mx-1"><a href=" " class="streched-link text-dark">Montreal</a></p>
+                        <p  class="card bg-primary-subtle border-primary mx-1"><a id="rec5" href=" " class="streched-link text-dark">Atlanta</a></p>
                     </div> 
                 </div>
             </div>
@@ -47,16 +43,16 @@
                 </div>
                 
                 <div class="bg-light">
-                    <h3 id="cityTitle" class="fs-1 mt-2 darker-text">Detroit</h3>
+                    <h3 id="cityTitle" class="fs-1 mt-2 darker-text"></h3>
                     <p id="currentDate" class="fs-5"></p>
                         <div class="d-flex flex-row justify-content-center align-items-center">
                             <div class="flex-column bg-primary rounded me-4">
                                 <i id="weatherIcon" src=" "></i>
                             </div>
                             <div class=" flex-column align-items-end justify-content-center">
-                                <p id="currentTemp" class="fs-4 darker-text">Temp: 77 F</p>
-                                <p id="windSpeed" class="fs-6">Wind Speed: 5 MPH NE</p>
-                                <p id="humidity" class="fs-6">Humidity: 66%</p> 
+                                <p id="currentTemp" class="fs-4 darker-text">Temp:</p>
+                                <p id="windSpeed" class="fs-6">Wind Speed:</p>
+                                <p id="humidity" class="fs-6">Humidity:</p> 
                             </div>
                         </div>
                     
