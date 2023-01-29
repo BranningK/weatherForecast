@@ -1,26 +1,57 @@
-let cityName = $('#cityName');
+var cityName = $('#cityName');
 let cityTitle = $('#cityTitle');
 let currentDate = $('#currentDate');
 let currentTemp = $('#currentTemp');
 let icon = $('#weatherIcon');
 let wind = $('#windSpeed');
 let humidity = $('#humidity');
+let boxDate = $('#boxDate');
+let boxContainer = $('#boxContainer')
 const APIkey = "6263ccfbb1c32f882fe28992cf9e4cdd"
-
+currentDate[0].textContent = dayjs().format('ddd MM/DD/YYYY');
 var pageMode = $('#flexSwitchCheckDefault');
 var searchButton = $('#searchBtn');
 
-searchButton.click(function() {
-    getWeatherData();
+var ran = false;
+
+
+function saveCity(){
+    var searchedCities=[]
+     let searchedCity = {
+        name: cityName[0].value,
+    }
+    searchedCities.push(searchedCity);
+    searchedCities = searchedCities.concat(JSON.parse(localStorage.getItem('searchedCities') || '[]'));
+    console.log(searchedCities);
+    localStorage.setItem("searchedCities", JSON.stringify(searchedCities));
+}
+
+$(document).keypress(function(e) {
+    if(e.which == 13) {
+        if(!ran){
+            saveCity();
+            getWeatherData();
+            ran = true;
+        } else{
+            return;
+        }
+    };
 });
 
-// if (pageMode != '#flexSwitchCheckDefault') {
-//     console.log('make light')
-// }
+searchButton.click(function() {
+    if(!ran){
+        savecity();
+        getWeatherData();
+        ran = true;
+    } else{
+        return;
+    }
+});
 
 
-function getWeatherData() { //Remember to change Raleigh to selected city from search
-    fetch(`https://api.openweathermap.org/data/2.5/weather?q=Raleigh&appid=${APIkey}&units=imperial`, {
+
+function getWeatherData() {
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName[0].value}&appid=${APIkey}&units=imperial`, {
     method: 'GET',
     // https://api.openweathermap.org/data/2.5/weather?q={city name},{state code},{country code}&appid={API key}
     credentials: 'same-origin',
@@ -30,6 +61,7 @@ function getWeatherData() { //Remember to change Raleigh to selected city from s
         return response.json();
     })
     .then(function (data) {
+        console.log(cityName[0].value);
         console.log('Here is data: ', data);
         var location = data.name;
         console.log('City name:', location);
@@ -58,11 +90,10 @@ function getWeatherData() { //Remember to change Raleigh to selected city from s
 
         cityTitle[0].textContent = location;
         currentTemp[0].textContent = ('Temp: ' + currTemp + '°F');
-        currentDate[0].textContent = dayjs().format('ddd M/D/YYYY');
+        currentDate[0].textContent = dayjs().format('ddd MM/DD/YYYY');
         wind[0].textContent = ('Wind Speed: ' + windSpeed + ' MPH ' + degToCompass(windDir));
         humidity[0].textContent = ('Humidity: ' + hum + '%');
         icon.append(`<img src= http://openweathermap.org/img/wn/${weatherImage}@2x.png></img>`);
-        console.log(`http://openweathermap.org/img/wn/10n@2x.png`)
 
         // data to make forecast request
         var lat = data.coord.lat;
@@ -89,7 +120,46 @@ console.log("======================================");
         .then(data => {
             console.log("Data: ", data);
 
-            // we want to pull apart the 'dt_txt'
+            // data.list[3] = noon the following day
+            // data.list[11] = noon two days after
+            // data.list[19] = noon 3 days after
+            // data.list[27] = noon 4 days after
+            // data.lsit[35] = noon 5 days after
+
+            
+
+            console.log(data.list[3]);
+            console.log(data.list[3].dt_txt);
+            console.log(data.list[3].main.temp);
+
+            var dtTXT = data.list[3].dt_txt;
+            var dtText = dtTXT.split(' ');
+            var dateText = dtText[0].split('-');
+
+            var temp1 = Math.round(data.list[3].main.temp);
+
+            var date1 = (dateText[1] + '/' + dateText[2] +'/' + dateText[0]);
+            var icon1 = $('#icon1');
+            var weatherImage1 = data.list[3].weather[0].icon;
+            var wind1 = $('#wind1');
+            windSpd1 = Math.round(data.list[3].wind.speed);
+            hum1 = data.list[3].main.humidity;
+            
+            for (i = 0; i < 5; i++){
+                boxContainer.prepend(   `<div class="darker-blue pb-4 card me-4">
+                                            <h5 class="text-center text-light">${date1}</h5>
+                                            <div class="bg-primary text-light p-3">
+                                                <img id="icon1"  src= http://openweathermap.org/img/wn/${weatherImage1}.png '></img>
+                                                <p class="fs-4">${temp1} F</p>
+                                                <p id='wind1' class="fs-6">Wind: ${windSpd1} MPH</p>
+                                                <p id='hum1' class="fs-6">Humidity: ${hum1}% </p>
+                                            </div>
+                                        </div>`
+                                    );
+            }
+
+            icon1.attr(`src=http://openweathermap.org/img/wn/${weatherImage1}@2x.png`);
+            console.log(`src= http://openweathermap.org/img/wn/${weatherImage1}@2x.png`)
             // <div class="d-flex flex-row m-3 mx-2 container-fluid">
             // <div class="bg-primary-subtle pb-4 card me-4">
             //     <h5 class="text-center">1/24/2023</h5>
@@ -101,10 +171,11 @@ console.log("======================================");
             //     </div>
             // </div>
 
-            // how do we convert a STRING to ARRAY and ARRAY to STRING
-            let test = "Hello There Friend";
-            let result = test.split(" ")  // ["Hello", "Theree", "Friende"]
-            let last = result[result.length - 1];
+            // // we want to pull apart the 'dt_txt'
+            // // how do we convert a STRING to ARRAY and ARRAY to STRING
+            // let test = "Hello There Friend";
+            // let result = test.split(" ")  // ["Hello", "Theree", "Friende"]
+            // let last = result[result.length - 1];
 
             // ARRAY.join();
         })

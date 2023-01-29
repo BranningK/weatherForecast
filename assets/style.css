@@ -1,0 +1,22 @@
+:root{
+    --darkblue: rgb(72, 72, 199);
+    --darker-blue: rgb(49, 49, 128);
+}
+.info-text{
+    color:var(--bs-info-text);
+} 
+.info-text-bg{
+    background-color: var(--bs-info-text);
+}
+a{
+    text-decoration: solid;
+}
+.dark-blue{
+    background-color: var(--darkblue);
+}
+.darker-blue{
+    background-color: var(--darker-blue);
+}
+.darker-text{
+    color: var(--darker-blue);
+}
