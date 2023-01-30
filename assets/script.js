@@ -23,10 +23,14 @@ if(!localStorage.getItem("searchedCities[4]")){
 }
 window.onload = pageload();
 
+// Because the code only appends names if it has 4 cities,
+// it won't search for the listed city because it's searching
+// for the index item, which isn't what is clicked, maybe create
+// else cases for each of the items in the array
+
 function pageload(){
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=Raleigh&appid=${APIkey}&units=imperial`, {
         method: 'GET',
-        // https://api.openweathermap.org/data/2.5/weather?q={city name},{state code},{country code}&appid={API key}
         credentials: 'same-origin',
         redirect: 'follow',
     })
@@ -72,10 +76,6 @@ function pageload(){
             var lon = data.coord.lon;
         });
 }
-
-    // cityName[0].value = 'Raleigh'
-    // getWeatherData(cityName[0].value)
-
 
 function pageloadRecs(){
     var json = localStorage.getItem('searchedCities');
@@ -125,7 +125,6 @@ searchButton.click(function() {
 $('#rec1').click(function(event){
     var json = localStorage.getItem('searchedCities');
     var jsArr = JSON.parse(json);
-    // jsArr[4].name
     cityName[0].value = jsArr[0].name
     getWeatherData();
     event.preventDefault();
@@ -202,6 +201,7 @@ function getWeatherData() {
         currentDate[0].textContent = dayjs().format('ddd MM/DD/YYYY');
         wind[0].textContent = ('Wind Speed: ' + windSpeed + ' MPH ' + degToCompass(windDir));
         humidity[0].textContent = ('Humidity: ' + hum + '%');
+        icon.remove()
         icon.append(`<img src= http://openweathermap.org/img/wn/${weatherImage}@2x.png></img>`);
 
         // data to make forecast request
