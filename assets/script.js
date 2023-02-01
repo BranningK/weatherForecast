@@ -21,7 +21,9 @@ if(!localStorage.getItem("searchedCities[4]")){
         event.preventDefault();
     })
 }
+
 window.onload = pageload();
+pageloadRecs();
 
 // Because the code only appends names if it has 4 cities,
 // it won't search for the listed city because it's searching
@@ -98,6 +100,8 @@ function saveCity(){
     searchedCities = searchedCities.concat(JSON.parse(localStorage.getItem('searchedCities') || '[]'));
     console.log(searchedCities);
     localStorage.setItem("searchedCities", JSON.stringify(searchedCities));
+
+    pageloadRecs();
 }
 
 $(document).keypress(function(e) {
@@ -113,49 +117,51 @@ $(document).keypress(function(e) {
 });
 
 searchButton.click(function() {
-    if(!ran){
+   // if(!ran){
         saveCity();
         getWeatherData();
         ran = true;
-    } else{
+  /*  } else{
         return;
     }
+    */
 });
 
 $('#rec1').click(function(event){
+    event.preventDefault();
     var json = localStorage.getItem('searchedCities');
     var jsArr = JSON.parse(json);
+    console.log("Stored Data: ", jsArr);
     cityName[0].value = jsArr[0].name
     getWeatherData();
-    event.preventDefault();
 })
 $('#rec2').click(function(event){
+    event.preventDefault();
     var json = localStorage.getItem('searchedCities');
     var jsArr = JSON.parse(json);
     cityName[0].value = jsArr[1].name
     getWeatherData();
-    event.preventDefault();
 })
 $('#rec3').click(function(event){
+    event.preventDefault();
     var json = localStorage.getItem('searchedCities');
     var jsArr = JSON.parse(json);
     cityName[0].value = jsArr[2].name
     getWeatherData();
-    event.preventDefault();
 })
 $('#rec4').click(function(event){
+    event.preventDefault();
     var json = localStorage.getItem('searchedCities');
     var jsArr = JSON.parse(json);
     cityName[0].value = jsArr[3].name
     getWeatherData();
-    event.preventDefault();
 })
 $('#rec5').click(function(event){
+    event.preventDefault();
     var json = localStorage.getItem('searchedCities');
     var jsArr = JSON.parse(json);
     cityName[0].value = jsArr[4].name
     getWeatherData();
-    event.preventDefault();
 })
 
 function getWeatherData() {
@@ -220,6 +226,11 @@ console.log("======================================");
     let forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${APIkey}&units=imperial`;
     console.log("Forecast URL:", forecastUrl);
 
+    // Empty or Reset the FORECAST CONTAINER 
+  //  boxContainer[0].innerHTML = "";
+    boxContainer.html("")
+    console.log("BOX: ", boxContainer[0]);
+
 
     fetch(forecastUrl)
         .then(function(response) {
@@ -234,6 +245,24 @@ console.log("======================================");
             // data.list[19] = noon 3 days after
             // data.list[27] = noon 4 days after
             // data.lsit[35] = noon 5 days after
+
+            let forecastArr = data.list;
+
+            let forecastContainerData = [];
+
+            for(let i = 0; i < forecastArr.length; i++) {
+
+               // console.log("Date: ", forecastArr[i].dt_txt);
+                let futureDateTxtArr = forecastArr[i].dt_txt.split(" ");
+                //console.log(futureDateTxtArr);
+
+                if(forecastArr[i].dt_txt.split(' ')[1] == '12:00:00') {
+                    forecastContainerData.push(forecastArr[i]);
+                }
+
+            }
+
+            console.log("Sorted Data: ", forecastContainerData)
 
             
 
@@ -253,6 +282,9 @@ console.log("======================================");
             var wind1 = $('#wind1');
             windSpd1 = Math.round(data.list[3].wind.speed);
             hum1 = data.list[3].main.humidity;
+
+
+            boxContainer.innerHTML = "";
             
             for (i = 0; i < 5; i++){
                 boxContainer.prepend(   `<div class="darker-blue pb-4 card me-4">
@@ -268,18 +300,7 @@ console.log("======================================");
             }
 
             icon1.attr(`src=http://openweathermap.org/img/wn/${weatherImage1}@2x.png`);
-            console.log(`src= http://openweathermap.org/img/wn/${weatherImage1}@2x.png`)
-            // <div class="d-flex flex-row m-3 mx-2 container-fluid">
-            // <div class="bg-primary-subtle pb-4 card me-4">
-            //     <h5 class="text-center">1/24/2023</h5>
-            //     <div class="bg-light text-dark p-3">
-            //         <i class="fa-solid fa-cloud fa-2x"></i>
-            //         <p class="fs-4">Temp: 77 F</p>
-            //         <p class="fs-6">Wind: 5 MPH SW</p>
-            //         <p class="fs-6">Humidity: 30%</p>
-            //     </div>
-            // </div>
-
+            console.log(`src= http://openweathermap.org/img/wn/${weatherImage1}@2x.png`);
             // // we want to pull apart the 'dt_txt'
             // // how do we convert a STRING to ARRAY and ARRAY to STRING
             // let test = "Hello There Friend";
