@@ -12,7 +12,7 @@
 
 <body data-bs-theme="light" class="bg-light">
     <nav class="navbar darker-blue container-fluid">
-       <h1 class="ms-3 text-light">Weather Forecast</h1>
+       <h1 class="ms-3 text-light"> Weather Forecast</h1>
     </nav>
 
     <main id="mainContent" class="d-flex">
@@ -25,11 +25,11 @@
                     <input id="cityName" class="mx-1 mt-2 rounded border-light" type="text" placeholder="Atlanta, GA">
                     <button id="searchBtn" type="submit" class="bg-primary text-light border-primary mx-1 mt-1 rounded">Search</button>
                     <div id="citySuggestions" class="d-flex flex-column mt-3 text-center">
-                        <p id='rec1' class="card bg-primary-subtle border-primary mx-1"><a href=" " class="streched-link text-dark"></a>Raleigh</p>
-                        <p id="rec2" class="card bg-primary-subtle border-primary mx-1"><a href=" " class="streched-link text-dark">Fayetteville</a></p> 
-                        <p id="rec3" class="card bg-primary-subtle border-primary mx-1"><a href=" " class="streched-link text-dark">Wilmington</a></p>
-                        <p id="rec4" class="card bg-primary-subtle border-primary mx-1"><a href=" " class="streched-link text-dark">Montreal</a></p>
-                        <p  class="card bg-primary-subtle border-primary mx-1"><a id="rec5" href=" " class="streched-link text-dark">Atlanta</a></p>
+                        <p class="card bg-primary-subtle border-primary mx-1"><a id='rec1' href=" " class="streched-link text-dark">Raleigh</a></p>
+                        <p class="card bg-primary-subtle border-primary mx-1"><a id="rec2" href=" " class="streched-link text-dark">Fayetteville</a></p> 
+                        <p class="card bg-primary-subtle border-primary mx-1"><a id="rec3" href=" " class="streched-link text-dark">Wilmington</a></p>
+                        <p class="card bg-primary-subtle border-primary mx-1"><a id="rec4" href=" " class="streched-link text-dark">Montreal</a></p>
+                        <p class="card bg-primary-subtle border-primary mx-1"><a id="rec5" href=" " class="streched-link text-dark">Atlanta</a></p>
                     </div> 
                 </div>
             </div>
@@ -37,8 +37,8 @@
         </aside>
 
         <div id="cityData" class="col-9 text-center mb-5">
-            <div class="rounded-bottom ">
-                <div class="p-1 bg-primary text-light">
+            <div class="">
+                <div class="py-1 bg-primary text-light">
                     <h3 >Current Weather: </h3>
                 </div>
                 
@@ -49,9 +49,9 @@
                             <div class="flex-column bg-primary rounded me-4">
                                 <i id="weatherIcon" src=" "></i>
                             </div>
-                            <div class=" flex-column align-items-end justify-content-center">
+                            <div class="flex-column align-items-end justify-content-center">
                                 <p id="currentTemp" class="fs-4 darker-text">Temp:</p>
-                                <p id="windSpeed" class="fs-6">Wind Speed:</p>
+                                <p id="windSpeed" class="fs-6">Wind:</p>
                                 <p id="humidity" class="fs-6">Humidity:</p> 
                             </div>
                         </div>
@@ -59,7 +59,7 @@
                     
                 </div>
             </div>
-            <div id="boxContainer" class="d-flex flex-row m-3 mx-2 justify-content-center container-fluid">
+            <div id="boxContainer" class="d-flex flex-row justify-content-center container-fluid mt-5">
 
             </div>
                 

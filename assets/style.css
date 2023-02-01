@@ -20,3 +20,6 @@ a{
 .darker-text{
     color: var(--darker-blue);
 }
+body{
+    text-align: center;
+}
