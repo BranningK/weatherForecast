@@ -11,24 +11,32 @@ const APIkey = "6263ccfbb1c32f882fe28992cf9e4cdd"
 currentDate[0].textContent = dayjs().format('ddd MM/DD/YYYY');
 var pageMode = $('#flexSwitchCheckDefault');
 var searchButton = $('#searchBtn');
-var ran = false;
 
-if(!localStorage.getItem("searchedCities[4]")){
+if(localStorage.getItem("searchedCities")=== null){
     console.log('Doesnt exist');
+    defaultCities();
 }else {
-    $('#rec1').click(function(event){
-        event.preventDefault();
-        pageloadRecs();
-    })
+    pageloadRecs();
 }
 
 window.onload = pageload();
-pageloadRecs();
 
-// Because the code only appends names if it has 4 cities,
-// it won't search for the listed city because it's searching
-// for the index item, which isn't what is clicked, maybe create
-// else cases for each of the items in the array
+
+
+
+function defaultCities(){
+    let searchedCities=[]
+    searchedCities.push({name: "Raleigh"});
+    searchedCities.push({name: "Durham"});
+    searchedCities.push({name: "London"});
+    searchedCities.push({name: "Paris"});
+    searchedCities.push({name: "Chicago"});
+    searchedCities = searchedCities.concat(JSON.parse(localStorage.getItem('searchedCities') || '[]'));
+    console.log(searchedCities);
+    localStorage.setItem("searchedCities", JSON.stringify(searchedCities));
+
+    pageloadRecs();
+}
 
 function pageload(){
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=Raleigh&appid=${APIkey}&units=imperial`, {
@@ -84,11 +92,11 @@ function pageloadRecs(){
     // convert data to JavaScript OBJECT type
     var jsArr = JSON.parse(json);
 
-    $('#rec1')[0].textContent = jsArr[0].name;
-    $('#rec2')[0].textContent = jsArr[1].name;
-    $('#rec3')[0].textContent = jsArr[2].name;
-    $('#rec4')[0].textContent = jsArr[3].name;
-    $('#rec5')[0].textContent = jsArr[4].name;
+    $('#rec1')[0].textContent = jsArr[0].name ? jsArr[0].name : '';
+    $('#rec2')[0].textContent = jsArr[1].name ? jsArr[1].name : '';
+    $('#rec3')[0].textContent = jsArr[2].name ? jsArr[2].name : '';
+    $('#rec4')[0].textContent = jsArr[3].name ? jsArr[3].name : '';
+    $('#rec5')[0].textContent = jsArr[4].name ? jsArr[4].name : '';
 }
 
 function saveCity(){
@@ -106,25 +114,14 @@ function saveCity(){
 
 $(document).keypress(function(e) {
     if(e.which == 13) {
-        if(!ran){
             saveCity();
             getWeatherData();
-            ran = true;
-        } else{
-            return;
-        }
     };
 });
 
 searchButton.click(function() {
-   // if(!ran){
         saveCity();
         getWeatherData();
-        ran = true;
-  /*  } else{
-        return;
-    }
-    */
 });
 
 $('#rec1').click(function(event){
@@ -240,12 +237,6 @@ console.log("======================================");
         .then(data => {
             console.log("Data: ", data);
 
-            // data.list[3] = noon the following day
-            // data.list[11] = noon two days after
-            // data.list[19] = noon 3 days after
-            // data.list[27] = noon 4 days after
-            // data.lsit[35] = noon 5 days after
-
             let forecastArr = data.list;
 
             let forecastContainerData = [];
@@ -288,11 +279,7 @@ console.log("======================================");
             console.log(data.list[3]);
             console.log(data.list[3].dt_txt);
             console.log(data.list[3].main.temp);
-
             
-            // var dtText = dtTXT.split(' ');
-            // var dateText = dtText[0].split('-');
-
             var boxTemp = Math.round(data.list[3].main.temp);
 
             
@@ -304,18 +291,6 @@ console.log("======================================");
 
 
             boxContainer.innerHTML = "";
-            
-
-            // icon1.attr(`src=http://openweathermap.org/img/wn/${boxIcon}@2x.png`);
-            // console.log(`src= http://openweathermap.org/img/wn/${boxIcon}@2x.png`);
-
-            // // we want to pull apart the 'dt_txt'
-            // // how do we convert a STRING to ARRAY and ARRAY to STRING
-            // let test = "Hello There Friend";
-            // let result = test.split(" ")  // ["Hello", "Theree", "Friende"]
-            // let last = result[result.length - 1];
-
-            // ARRAY.join();
         })
         .catch(error => {
             console.log(error);
