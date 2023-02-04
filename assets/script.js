@@ -17,11 +17,13 @@ if(!localStorage.getItem("searchedCities[4]")){
     console.log('Doesnt exist');
 }else {
     $('#rec1').click(function(event){
-        pageloadRecs()
         event.preventDefault();
+        pageloadRecs();
     })
 }
+
 window.onload = pageload();
+pageloadRecs();
 
 // Because the code only appends names if it has 4 cities,
 // it won't search for the listed city because it's searching
@@ -67,7 +69,7 @@ function pageload(){
             cityTitle[0].textContent = location;
             currentTemp[0].textContent = ('Temp: ' + currTemp + '°F');
             currentDate[0].textContent = dayjs().format('ddd MM/DD/YYYY');
-            wind[0].textContent = ('Wind Speed: ' + windSpeed + ' MPH ' + degToCompass(windDir));
+            wind[0].textContent = ('Wind: ' + windSpeed + ' MPH ' + degToCompass(windDir));
             humidity[0].textContent = ('Humidity: ' + hum + '%');
             icon.append(`<img src= http://openweathermap.org/img/wn/${weatherImage}@2x.png></img>`);
     
@@ -98,6 +100,8 @@ function saveCity(){
     searchedCities = searchedCities.concat(JSON.parse(localStorage.getItem('searchedCities') || '[]'));
     console.log(searchedCities);
     localStorage.setItem("searchedCities", JSON.stringify(searchedCities));
+
+    pageloadRecs();
 }
 
 $(document).keypress(function(e) {
@@ -113,49 +117,51 @@ $(document).keypress(function(e) {
 });
 
 searchButton.click(function() {
-    if(!ran){
+   // if(!ran){
         saveCity();
         getWeatherData();
         ran = true;
-    } else{
+  /*  } else{
         return;
     }
+    */
 });
 
 $('#rec1').click(function(event){
+    event.preventDefault();
     var json = localStorage.getItem('searchedCities');
     var jsArr = JSON.parse(json);
+    console.log("Stored Data: ", jsArr);
     cityName[0].value = jsArr[0].name
     getWeatherData();
-    event.preventDefault();
 })
 $('#rec2').click(function(event){
+    event.preventDefault();
     var json = localStorage.getItem('searchedCities');
     var jsArr = JSON.parse(json);
     cityName[0].value = jsArr[1].name
     getWeatherData();
-    event.preventDefault();
 })
 $('#rec3').click(function(event){
+    event.preventDefault();
     var json = localStorage.getItem('searchedCities');
     var jsArr = JSON.parse(json);
     cityName[0].value = jsArr[2].name
     getWeatherData();
-    event.preventDefault();
 })
 $('#rec4').click(function(event){
+    event.preventDefault();
     var json = localStorage.getItem('searchedCities');
     var jsArr = JSON.parse(json);
     cityName[0].value = jsArr[3].name
     getWeatherData();
-    event.preventDefault();
 })
 $('#rec5').click(function(event){
+    event.preventDefault();
     var json = localStorage.getItem('searchedCities');
     var jsArr = JSON.parse(json);
     cityName[0].value = jsArr[4].name
     getWeatherData();
-    event.preventDefault();
 })
 
 function getWeatherData() {
@@ -169,6 +175,7 @@ function getWeatherData() {
         return response.json();
     })
     .then(function (data) {
+        icon.html(" ");
         console.log(cityName[0].value);
         console.log('Here is data: ', data);
         var location = data.name;
@@ -199,9 +206,8 @@ function getWeatherData() {
         cityTitle[0].textContent = location;
         currentTemp[0].textContent = ('Temp: ' + currTemp + '°F');
         currentDate[0].textContent = dayjs().format('ddd MM/DD/YYYY');
-        wind[0].textContent = ('Wind Speed: ' + windSpeed + ' MPH ' + degToCompass(windDir));
+        wind[0].textContent = ('Wind: ' + windSpeed + ' MPH ' + degToCompass(windDir));
         humidity[0].textContent = ('Humidity: ' + hum + '%');
-        icon.remove()
         icon.append(`<img src= http://openweathermap.org/img/wn/${weatherImage}@2x.png></img>`);
 
         // data to make forecast request
@@ -220,6 +226,11 @@ console.log("======================================");
     let forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${APIkey}&units=imperial`;
     console.log("Forecast URL:", forecastUrl);
 
+    // Empty or Reset the FORECAST CONTAINER 
+  //  boxContainer[0].innerHTML = "";
+    boxContainer.html("")
+    console.log("BOX: ", boxContainer[0]);
+
 
     fetch(forecastUrl)
         .then(function(response) {
@@ -235,50 +246,68 @@ console.log("======================================");
             // data.list[27] = noon 4 days after
             // data.lsit[35] = noon 5 days after
 
+            let forecastArr = data.list;
+
+            let forecastContainerData = [];
+
+            for(let i = 0; i < forecastArr.length; i++) {
+                let futureDateTxtArr = forecastArr[i].dt_txt.split(" ");
+                if(forecastArr[i].dt_txt.split(' ')[1] == '12:00:00') {
+                    forecastContainerData.push(forecastArr[i]);
+                }
+
+            }
+
+            console.log("Sorted Data: ", forecastContainerData)
+
+            for(let i = 0; i < forecastContainerData.length; i++){
+                var dtTXT = forecastContainerData[i].dt_txt;
+                var dateText = dtTXT.split(' ');
+                var boxDateProto = dateText[0].split('-');
+                var boxDate = (boxDateProto[1] + '/' + boxDateProto[2]);
+                var boxTemp = Math.round(forecastContainerData[i].main.temp);
+                var boxHum = forecastContainerData[i].main.humidity
+                var boxWindSpd = Math.round(forecastContainerData[i].wind.speed);
+                var boxIcon = forecastContainerData[i].weather[0].icon;
+                
+                boxContainer.append(   `<div class="darker-blue pb-4 card me-2">
+                                            <h5 class="text-center text-light m-2 mx-2">${boxDate}</h5>
+                                            <div class="bg-primary text-light">
+                                                <img id="icon1" src= http://openweathermap.org/img/wn/${boxIcon}.png '></img>
+                                                <p class="fs-4 m-1">${boxTemp}°F</p>
+                                                <p id='wind1' class="fs-6 mx-2">Wind: <br>${boxWindSpd} MPH</p>
+                                                <p id='hum1' class="fs-6 mx-2">Humidity: <br>${boxHum}% </p>
+                                            </div>
+                                        </div>`
+                                    );
+            }
+            
+
             
 
             console.log(data.list[3]);
             console.log(data.list[3].dt_txt);
             console.log(data.list[3].main.temp);
 
-            var dtTXT = data.list[3].dt_txt;
-            var dtText = dtTXT.split(' ');
-            var dateText = dtText[0].split('-');
-
-            var temp1 = Math.round(data.list[3].main.temp);
-
-            var date1 = (dateText[1] + '/' + dateText[2] +'/' + dateText[0]);
-            var icon1 = $('#icon1');
-            var weatherImage1 = data.list[3].weather[0].icon;
-            var wind1 = $('#wind1');
-            windSpd1 = Math.round(data.list[3].wind.speed);
-            hum1 = data.list[3].main.humidity;
             
-            for (i = 0; i < 5; i++){
-                boxContainer.prepend(   `<div class="darker-blue pb-4 card me-4">
-                                            <h5 class="text-center text-light">${date1}</h5>
-                                            <div class="bg-primary text-light p-3">
-                                                <img id="icon1"  src= http://openweathermap.org/img/wn/${weatherImage1}.png '></img>
-                                                <p class="fs-4">${temp1} F</p>
-                                                <p id='wind1' class="fs-6">Wind: ${windSpd1} MPH</p>
-                                                <p id='hum1' class="fs-6">Humidity: ${hum1}% </p>
-                                            </div>
-                                        </div>`
-                                    );
-            }
+            // var dtText = dtTXT.split(' ');
+            // var dateText = dtText[0].split('-');
 
-            icon1.attr(`src=http://openweathermap.org/img/wn/${weatherImage1}@2x.png`);
-            console.log(`src= http://openweathermap.org/img/wn/${weatherImage1}@2x.png`)
-            // <div class="d-flex flex-row m-3 mx-2 container-fluid">
-            // <div class="bg-primary-subtle pb-4 card me-4">
-            //     <h5 class="text-center">1/24/2023</h5>
-            //     <div class="bg-light text-dark p-3">
-            //         <i class="fa-solid fa-cloud fa-2x"></i>
-            //         <p class="fs-4">Temp: 77 F</p>
-            //         <p class="fs-6">Wind: 5 MPH SW</p>
-            //         <p class="fs-6">Humidity: 30%</p>
-            //     </div>
-            // </div>
+            var boxTemp = Math.round(data.list[3].main.temp);
+
+            
+            var icon1 = $('#icon1');
+            // var weatherImage1 = data.list[3].weather[0].icon;
+            var wind1 = $('#wind1');
+            windSpd = Math.round(data.list[3].wind.speed);
+            hum = data.list[3].main.humidity;
+
+
+            boxContainer.innerHTML = "";
+            
+
+            // icon1.attr(`src=http://openweathermap.org/img/wn/${boxIcon}@2x.png`);
+            // console.log(`src= http://openweathermap.org/img/wn/${boxIcon}@2x.png`);
 
             // // we want to pull apart the 'dt_txt'
             // // how do we convert a STRING to ARRAY and ARRAY to STRING
