@@ -263,7 +263,7 @@ console.log("======================================");
                 
                 boxContainer.append(   `<div class="darker-blue pb-4 card me-2">
                                             <h5 class="text-center text-light m-2 mx-2">${boxDate}</h5>
-                                            <div class="bg-primary text-light">
+                                            <div id="fiveDayResults" class=" bg-primary text-light">
                                                 <img id="icon1" src= http://openweathermap.org/img/wn/${boxIcon}.png '></img>
                                                 <p class="fs-4 m-1">${boxTemp}°F</p>
                                                 <p id='wind1' class="fs-6 mx-2">Wind: <br>${boxWindSpd} MPH</p>

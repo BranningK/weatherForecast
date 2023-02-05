@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Forecast</title>
-    <!-- <script src="https://example.com/fontawesome/v5.15.4/js/all.js" data-auto-a11y="true" ></script> -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" href="/assets/style.css">
 </head>
@@ -18,9 +17,9 @@
     <main id="mainContent" class="d-flex">
         <aside id="citySearch" class="bg-light col-3 d-flex flex-column">
         <div class="bg-primary py-1">
-            <h3 class="text-center text-light">Search for a City: </h3>
+            <h3 id="citySearchHeading" class="text-center text-light">Search for a City: </h3>
         </div>
-            <div class="rounded-bottom">
+            <div id="suggestionContainer" class="rounded-bottom">
                 <div class="card bg-light-subtle input-group-lg">
                     <input id="cityName" class="mx-1 mt-2 rounded border-light" type="text" placeholder="Atlanta, GA">
                     <button id="searchBtn" type="submit" class="bg-primary text-light border-primary mx-1 mt-1 rounded">Search</button>
@@ -39,7 +38,7 @@
         <div id="cityData" class="col-9 text-center mb-5">
             <div class="">
                 <div class="py-1 bg-primary text-light">
-                    <h3 >Current Weather: </h3>
+                    <h3 id="currWeatherHeading">Current Weather: </h3>
                 </div>
                 
                 <div class="bg-light">
@@ -59,7 +58,7 @@
                     
                 </div>
             </div>
-            <div id="boxContainer" class="d-flex flex-row justify-content-center container-fluid mt-5">
+            <div id="boxContainer" class="d-flex justify-content-center container-fluid ">
 
             </div>
                 
