@@ -23,3 +23,31 @@ a{
 body{
     text-align: center;
 }
+
+.fusion{
+    flex-direction: column;
+}
+
+
+/* Small devices (landscape phones, 576px and up) */
+@media (max-width: 660px) {
+    aside{
+        height: auto;
+    }
+    #citySearch{
+        height: min-content;
+    }
+    #boxContainer{
+        flex-wrap: wrap;
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (max-width: 780px) {
+    #citySearchHeading{
+        font-size: large;
+    }
+    #currWeatherHeading{
+        font-size: large;
+    }
+}
